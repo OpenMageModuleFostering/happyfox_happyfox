@@ -1,0 +1,92 @@
+<?php
+/**
+ * Copyright 2014 HappyFox.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+	
+	if(!Mage::getStoreConfig('happyfox/extension_settings/show_on_customer')) {
+		return;
+	}
+	
+	$tickets = null;
+	
+	if($customer = Mage::registry('current_customer')) {
+		try {
+			$tickets = Mage::getModel('happyfox/api_tickets')->customerTickets($customer->getEmail());
+		} catch(Exception $e) {
+			//Don't display anything
+		}
+	}
+?>
+
+<?php if($tickets->data): ?>
+	<div class="clear"></div>
+	<br/>
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Tickets raised by <?php echo $customer->getName(); ?></h4>
+		</div>
+		<div class="grid">
+			<div class="hor-scroll">
+				<table cellspacing="0" class="data order-tables">
+					<thead>
+						<tr class="headings">
+							<th>Ticket ID</th>
+							<th>Status</th>
+							<th>Priority</th>
+							<th>Subject</th>
+							<th>Requested on</th>
+							<th>Last Updated</th>
+						</tr>
+					</thead>
+					<tbody class="odd">
+						<?php foreach($tickets->data as $ticket): ?>
+							<tr class="border">
+								<td>
+									<?php
+										$url = Mage::helper('happyfox')->getUrl('ticket', $ticket->id);
+										echo '<a href="' . $url . '" target="_blank">' . $ticket->display_id . '</a>';
+									?>
+								</td>
+								<td>
+									<?php echo $ticket->status->name; ?>
+								</td>
+								<td>
+									<?php echo $ticket->priority->name; ?>
+								</td>
+								<td>
+									<?php
+										$snippet = Mage::helper('happyfox')->getSnippet($ticket->subject);
+										$title = $ticket->subject;
+									?>
+									<a href="<?php echo $url; ?>" target="_blank" title="<?php echo $title;?>"><?php echo $snippet; ?></a>
+								</td>
+								<td>
+									<?php echo Mage::helper('core')->formatDate($ticket->created_at, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM, true); ?>
+								</td>
+								<td>
+									<?php
+										$date = Mage::helper('core')->formatDate($ticket->last_updated_at, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM, true);
+										echo ($ticket->last_updated_at == "") ? "-" : $date;
+									?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+<?php endif; ?>

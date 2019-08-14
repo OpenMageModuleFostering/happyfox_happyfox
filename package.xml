@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+    <name>Happyfox_Happyfox</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.apache.org/licenses/LICENSE-2.0">Apache Software License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>HappyFox extension for Magento offers a simple and perfect solution for delivering great customer support from Magento website, using your favorite help desk application.</summary>
+    <description>HappyFox is the leading market solution offering customer support tools for SMEs and Enterprise businesses. &#xD;
+&#xD;
+With the help desk extension for Magento, HappyFox allows you to perform several key actions without having to leave your Magento admin site. &#xD;
+&#xD;
+Here is the list of features offered through this extension:&#xD;
+&#xD;
+1) View support tickets raised by your customers under Magento Customers section&#xD;
+2) Access all pending and completed tickets raised by Magento customers within Magento admin panel &#xD;
+3) Visualize a dashboard of all pending tickets and recently raised tickets</description>
+    <notes>First stable release of the HappyFox HelpDesk extension for Magento.</notes>
+    <authors><author><name>HappyFox Inc.</name><user>happyfox</user><email>support@happyfox.com</email></author><author><name>Balu Vaithinathan</name><user>agent_logic</user><email>iam@baluvaithinathan.com</email></author></authors>
+    <date>2014-06-10</date>
+    <time>17:41:51</time>
+    <contents><target name="magecommunity"><dir name="Happyfox"><dir name="Happyfox"><dir name="Block"><dir name="Adminhtml"><dir name="Dashboard"><file name="Grids.php" hash="1d57a345636a561a468aedf40c45ec97"/><dir name="Tab"><file name="View.php" hash="a864bddb0aeb6dcb634250861b172a8a"/></dir></dir><file name="Dashboard.php" hash="db9c847c4bc6b11c90b6f3d99f006a4b"/><file name="Menu.php" hash="ea51e4ad2e6fe44b0adf8308d341de2f"/><dir name="Order"><dir name="View"><file name="Tickets.php" hash="b83414627e0707c20030fec037c9760e"/></dir><file name="View.php" hash="cdd810339ae28c0157285dc8764f8d1e"/></dir></dir><file name="Supporttab.php" hash="b31bb0aeb80950d80b12c67ee40c656c"/></dir><dir name="Helper"><file name="Data.php" hash="a8bc5bc77affa59bd942ee6ed7b657f7"/></dir><dir name="Model"><dir name="Api"><file name="Abstract.php" hash="5277c823faff5477403168676d7ffea0"/><file name="Statuses.php" hash="b1f3971aa36916a1b9c4811747037894"/><file name="Tickets.php" hash="58890ff853e4ca9e0d48b802dfc17231"/><file name="Users.php" hash="6098731e0a0dd38c8e0caa7370f01757"/></dir><file name="Observer.php" hash="643c92f16490c41f86d449fc5c5f8d19"/><dir name="Source"><file name="Categories.php" hash="9ce69067c93db836b0a5840e4077bdc6"/><file name="Ranges.php" hash="aec60a340dfd73ebd49a1771450d7e77"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="HappyfoxController.php" hash="11e19a4323cf0022fe451a9d4d693379"/></dir><file name="IndexController.php" hash="afd6237588a3fa5fcfc2ed38c6cb711a"/></dir><dir name="etc"><file name="config.xml" hash="54e3a2cba1dea4465dc2ed6627ef3f1a"/><file name="system.xml" hash="01ad48d35a8b961e2ecf7cb9585b622d"/></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="happyfox.xml" hash="8814eb85e1e9a8fc2ce66b2a492f7da9"/></dir><dir name="template"><dir name="happyfox"><file name="HF logos - Google-04.png" hash="cf580560cb0215c1aa49112ac3491d9d"/><dir name="customer"><file name="tickets.phtml" hash="95a9687250042bb7547a416a0ae4ed2f"/></dir><dir name="dashboard"><file name="empty.phtml" hash="351348abc145d9fc5826e10dc4e17706"/><file name="index.phtml" hash="d22449e6e712be0419a79427e4b775f2"/><dir name="tabs"><file name="view.phtml" hash="3568213eb7ff2feb33b0317c27ef602c"/></dir></dir><file name="left-menu.phtml" hash="11514a931945a036154333ece2ab6cc4"/><dir name="order"><file name="tickets.phtml" hash="0392a4889d5d10f8993f938adcd0ea3f"/></dir></dir></dir></dir></dir></dir></target><target name="mageweb"><dir name="js"><dir name="happyfox"><file name="happyfox-settings.js" hash="b62823fbc4b0934a0c8a4d30d2c2ccd9"/><file name="happyfox.js" hash="e4b81eebec7f36a3f6a8c59a32b3bf38"/><file name="jquery.jqpagination.min.js" hash="2ebfe6e624e44c14c7d277eaa33c875e"/><file name="jquery.min.js" hash="0b6ecf17e30037994d3ffee51b525914"/></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Happyfox_Happyfox.xml" hash="8ca6515b17c2410db966d2e24faa73b1"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

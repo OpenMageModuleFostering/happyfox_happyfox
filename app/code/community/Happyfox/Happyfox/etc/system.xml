@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<happyfox_extension>
+			<label>HappyFox</label>
+			<sort_order>1000</sort_order>
+		</happyfox_extension>
+	</tabs>
+	<sections>
+		<happyfox translate="label" module="happyfox">
+			<label>HappyFox</label>
+			<class>happyfox-section</class>
+			<header_css>happyfox-header</header_css>
+			<tab>happyfox_extension</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>9999</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_store>1</show_in_store>
+			<show_in_website>1</show_in_website>
+			<groups>
+				<general translate="label comment">
+					<expanded>1</expanded>
+					<label>HappyFox Account Settings</label>
+					<comment>Please enter your HappyFox subdomain, API Key and API Auth Code information so we know which HappyFox account to access.</comment>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_store>1</show_in_store>
+					<show_in_website>1</show_in_website>
+					<fields>
+						<domain translate="label comment">
+							<label><![CDATA[HappyFox Subdomain *]]></label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+							<comment><![CDATA[<i>your_happyfox_domain.happyfox.com</i>]]></comment>
+						</domain>
+						<apiKey translate="label">
+							<label><![CDATA[API Key *]]></label>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</apiKey>
+						<authCode translate="label">
+							<label><![CDATA[API Auth Code *]]></label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</authCode>
+					</fields>
+				</general>
+				<extension_settings translate="label">
+					<label>Extension Settings</label>
+					<expanded>1</expanded>
+					<frontend_type>text</frontend_type>
+					<sort_order>11</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_store>1</show_in_store>
+					<show_in_website>1</show_in_website>
+					<fields>
+						<display_tickets translate="label">
+							<label>Display HappyFox tickets on Admin Dashboard?</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>1</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</display_tickets>
+						<ticket_category translate="label">
+							<label><![CDATA[Select ticket category to display *]]></label>
+							<frontend_type>select</frontend_type>
+							<sort_order>2</sort_order>
+							<source_model>happyfox/source_categories</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</ticket_category>
+						<number_of_tickets translate="label">
+							<label>No. of tickets to display</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>3</sort_order>
+							<source_model>happyfox/source_ranges</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</number_of_tickets>
+						<show_on_customer translate="label">
+							<label>Show HappyFox tickets on customer view</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>4</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</show_on_customer>
+						<show_on_order translate="label">
+							<label>Show HappyFox tickets on order view</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>5</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</show_on_order>
+						<support_tab_active translate="label">
+							<label>Display Support Tab on website</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>6</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</support_tab_active>
+						<support_tab_code translate="label">
+							<label>Paste HTML code</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>7</sort_order>
+							<depends>
+								<support_tab_active>1</support_tab_active>
+							</depends>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</support_tab_code>
+						<!--<support_tab_get translate="label value">
+							<label></label>
+							<frontend_model>happyfox/adminhtml_config_link</frontend_model>
+							<destination><![CDATA[staff/manage/integrations/embed-forms/]]></destination>
+							<value>Get support tab code</value>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+							<depends>
+								<support_tab_active>1</support_tab_active>
+							</depends>
+						</support_tab_get>-->
+						<happyfox_order_field translate="label comment">
+							<label>HappyFox Custom Field name for Order ID</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>8</sort_order>
+							<comment><![CDATA[Used to link Magento orders with HappyFox tickets]]></comment>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</happyfox_order_field>
+					</fields>
+				</extension_settings>
+			</groups>
+		</happyfox>
+	</sections>
+</config>

@@ -1,0 +1,206 @@
+<?php
+/**
+ * Copyright 2014 HappyFox.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+	
+	$view = $this->getView();
+	$cat_id = trim(trim(Mage::getStoreConfig('happyfox/extension_settings/ticket_category')));
+	
+	if($view == "pending") {
+		$tickets = Mage::getModel('happyfox/api_tickets')->getAll($cat_id, "pending");
+	} else {
+		if($this->isHappyFoxDashboard()) { //fetch solved tickets only for HF dashboard
+			$tickets = Mage::getModel('happyfox/api_tickets')->getAll($cat_id, "completed");
+		}
+	}
+?>
+
+<?php if($view): ?>
+	<?php if(!$this->isHappyFoxDashboard()): ?>
+		<div class="entry-edit">
+			<div class="entry-edit-head">
+				<h4>Pending HappyFox Tickets</h4>
+			</div>
+			<fieldset class="a-center bold">
+				<span class="nowrap" style="font-size:18px;"><?php echo ($tickets->page_info->last_index === 0) ? "No pending tickets. " : $tickets->page_info->last_index;?></span>
+				<?php $url = $this->getUrl('*/happyfox/index'); ?>
+				<span class="nowrap" style="font-size:12px;"><a href="<?php echo $url;?>">View tickets</a></span>
+			</fieldset>
+		</div>
+		<div class="clear"></div>
+	<?php endif; ?>
+	
+	<div class="grid np">
+		<table cellspacing="0" class="data order-tables">
+			<thead>
+				<tr class="headings">
+					<th>
+						Status
+					</th>
+					<th>
+						Subject
+					</th>
+					<th>
+						Raised By
+					</th>
+					<th>
+						Created On
+					</th>
+					<th>
+						Priority
+					</th>
+					<th>
+						Updated On
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					if(empty($tickets->data)):
+				?>
+				<tr>
+					<td class="empty-text a-center" colspan="100">No tickets found.</td>
+				</tr>
+				<?php
+					endif;
+					
+					$i = 0;
+					
+					foreach($tickets->data as $ticket) {
+						if($i == 10) {
+							if(!$this->isHappyFoxDashboard()) {
+								break;
+							}
+						}
+				?>
+				<tr class="border <?php echo ($i % 2 == 0) ? 'even' : 'odd'; ?>">
+					<td>
+						<?php echo $ticket->status->name;?>
+					</td>
+					<td>
+						<?php
+							$url = Mage::helper('happyfox')->getUrl('ticket', $ticket->id);
+							$snippet = Mage::helper('happyfox')->getSnippet($ticket->subject);
+							$title = $ticket->subject;
+						?>
+						<a href="<?php echo $url; ?>" target="_blank" title="<?php echo $title;?>"><?php echo $ticket->display_id . ": " . $snippet; ?></a>
+					</td>
+					<td>
+						<?php
+							$url = Mage::helper('happyfox')->getUrl('user', $ticket->user->id);
+						?>
+						<a href="<?php echo $url; ?>" target="_blank"><?php echo $ticket->user->name; ?></a>
+					</td>
+					<td>
+						<?php echo Mage::helper('core')->formatDate($ticket->created_at, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM, true); ?>
+					</td>
+					<td>
+						<?php echo $ticket->priority->name;?>
+					</td>
+					<td>
+						<?php
+							$date = Mage::helper('core')->formatDate($ticket->last_updated_at, Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM, true);
+							echo ($ticket->last_updated_at == "") ? "-" : $date; ?>
+					</td>
+				</tr>
+				<?php
+						$i++;
+					}
+				?>
+			</tbody>
+		</table>
+		<?php
+			//$status = $tickets->filters->status;
+			//$pages = $tickets->page_info->page_count;
+			
+		?>
+		<!--<div class="happyfox-pagination" id="happyfox_pagination_<?php echo $view; ?>">
+			<a href="#" class="first" data-action="first">&laquo;</a>
+			<a href="#" class="previous" data-action="previous">&lt;</a>
+			<input type="text" readonly="readonly" data-max-page="<?php echo $pages ?>" />
+			<a href="#" class="next" data-action="next">&gt;</a>
+			<a href="#" class="last" data-action="last">&raquo;</a>-->
+			<?php
+				/*$domain = Mage::getStoreConfig('happyfox/general/domain');
+					
+				if(preg_match('/^https:\/\//', $domain) === 0) {
+					$domain = str_replace("http://", "", $domain);
+					$domain = "https://" . $domain;
+					$domain = trim($domain, "/");
+				}
+				
+				$url = $domain . "/api/1.1/json/tickets/?category=$cat_id";
+				$api_key = Mage::getStoreConfig('happyfox/general/apiKey');
+				$auth_code = Mage::getStoreConfig('happyfox/general/authCode');
+					
+				if($view == "pending") {
+					$url .= "&status=_pending&page=";
+					
+					echo <<<SCRIPT
+						<script type="text/javascript">
+							jQuery('#happyfox_pagination_$view').jqPagination({
+								paged: function(page) {
+									console.log("Page: " + page);
+									getTicketsPage("$url" + page, "$api_key", "$auth_code");
+								},
+								max_page: $pages
+							});
+						</script>
+SCRIPT;
+				} else {
+					//Pass the query URL itself to func instead of making JS do all the work
+					$statuses = Mage::getModel('happyfox/api_statuses')->getAll("completed");
+					$statuses = implode(",", $statuses);
+					$url .= "&q=status" . urlencode(":$statuses") . "&page=";
+					
+					echo <<<SCRIPT
+						<script type="text/javascript">
+							jQuery('#happyfox_pagination_$view').jqPagination({
+								paged: function(page) {
+									console.log("Page: " + page);
+									getTicketsPage("$url" + page, "$api_key", "$auth_code");
+								},
+								max_page: $pages
+							});
+						</script>
+SCRIPT;
+				}*/
+			?>
+		<!--</div> //happyfox-pagination -->
+	</div>
+	<div class="clear"> </div>
+	<?php
+		$number_of_tickets = Mage::getStoreConfig('happyfox/extension_settings/number_of_tickets');
+		
+		if($tickets->page_info->last_index > $number_of_tickets) {
+			$url = trim(Mage::getStoreConfig('happyfox/general/domain'), "/");
+			
+			if(preg_match('/^https:\/\//', $url) === 0) {
+				$url = str_replace("http://", "", $url);
+				$url = "https://" . $url;
+			}
+			
+			if($view === "pending") {
+				$url .= "/staff/tickets/?status=_pending&category=$cat_id";
+			} else {
+				$statuses = explode(" ", $tickets->filters->q);
+				$url .= "/staff/tickets/?status=_all&category=$cat_id&q=" . urlencode($statuses[0]);
+			}
+	?>
+	<div>
+		<a href="<?php echo $url; ?>" target="_blank">View more tickets...</a>
+	</div>
+	<?php } //end if ?>
+<?php endif; ?>
