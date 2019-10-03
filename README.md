@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 HappyFox extension for Magento offers a simple and perfect solution for delivering great customer support from Magento website, using your favorite help desk application.
